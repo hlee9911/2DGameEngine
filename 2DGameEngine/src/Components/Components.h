@@ -41,6 +41,7 @@ struct SpriteComponent
 	int m_height;
 	bool m_isFixed;
 	int m_zIndex;
+	SDL_RendererFlip m_flip;
 	SDL_Rect m_srcRect;
 
 	SpriteComponent(const std::string& assetId = "", int width = 0, int height = 0, int zIndex = 0, bool isFixed = false, int srcRectX = 0, int srcRectY = 0) noexcept
@@ -49,6 +50,7 @@ struct SpriteComponent
 		this->m_width = width;
 		this->m_height = height;
 		this->m_zIndex = zIndex;
+		this->m_flip = SDL_FLIP_NONE; 
 		this->m_isFixed = isFixed;
 		this->m_srcRect = { srcRectX, srcRectY, width, height };
 	};

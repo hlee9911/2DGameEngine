@@ -32,46 +32,90 @@ public:
 
 	void SubscribeToEvent(std::unique_ptr<EventBus>& eventBus) noexcept override
 	{
-		// eventBus->SubscribeEvent<OnEntityDestroyedEvent>(this, &MovementSystem::OnEntityDestroyed);
+		eventBus->SubscribeEvent<CollisionEvent>(this, &MovementSystem::OnEntityCollide);
 	}
 
-	//void OnEntityDestroyed(OnEntityDestroyedEvent& event) noexcept
-	//{
-	//	event.m_eventBus.Reset();
-	//	Logger::Log("Entity destroyed event received. Entity ID: " + std::to_string(event.m_entity.GetID()));
-	//}
+	void OnEntityCollide(CollisionEvent& event) noexcept
+	{
+		Entity& a = event.m_entityA;
+		Entity& b = event.m_entityB;
+		// Logger::Log("Entity destroyed event received. Entity ID: " + std::to_string(event.m_entity.GetID()));
+	
+		if (a.BelongsToGroup("enemies") && b.BelongsToGroup("obstacles"))
+		{
+			OnEnemyHitsObstacle(a, b); // "a" is the enemy, "b" is the obstacle
+		}
+		else if (b.BelongsToGroup("enemies") && a.BelongsToGroup("obstacles"))
+		{
+			OnEnemyHitsObstacle(b, a); // "b" is the enemy, "a" is the obstacle
+		}
+	}
+
+	void OnEnemyHitsObstacle(Entity& enemy, Entity& obstacle) noexcept
+	{
+		// flip the enemy velocity
+		if (enemy.HasComponent<RigidbodyComponent>() && enemy.HasComponent<SpriteComponent>())
+		{
+			auto& enemyRigidbody = enemy.GetComponent<RigidbodyComponent>();
+			auto& enemySprite = enemy.GetComponent<SpriteComponent>();
+
+			if (enemyRigidbody.m_velocity.x != 0)
+			{
+				enemyRigidbody.m_velocity.x *= -1;
+				enemySprite.m_flip = (enemySprite.m_flip == SDL_FLIP_NONE) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+			}
+			if (enemyRigidbody.m_velocity.y != 0) {
+
+				enemyRigidbody.m_velocity.y *= -1;
+				enemySprite.m_flip = (enemySprite.m_flip == SDL_FLIP_NONE) ? SDL_FLIP_VERTICAL : SDL_FLIP_NONE;
+			}
+		}
+	}
 
 	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer) noexcept override
 	{
 		//TODO:
 		//loop all entities with the system is interested in
-		for (const auto& entity : GetSystemEntities())
+		for (auto& entity : GetSystemEntities())
 		{
 			// Update entity position based on its velocity
 			auto& transform = entity.GetComponent<TransformComponent>();
 			auto& sprite = entity.GetComponent<SpriteComponent>();
 			const auto rigidbody = entity.GetComponent<RigidbodyComponent>();
 
+			transform.m_position.x += rigidbody.m_velocity.x * deltaTime;
+			transform.m_position.y += rigidbody.m_velocity.y * deltaTime;
+			
 			// constraint the position of the entity to the map limits
-			if (transform.m_position.x + rigidbody.m_velocity.x * deltaTime < 0)
-				transform.m_position.x = 0;
-			else if (transform.m_position.x > Game::mapWidth - sprite.m_width)
-				transform.m_position.x = Game::mapWidth - sprite.m_width;
-			else
-				transform.m_position.x += rigidbody.m_velocity.x * deltaTime;
-
-			if (transform.m_position.y + rigidbody.m_velocity.y * deltaTime < 0)
-				transform.m_position.y = 0;
-			else if (transform.m_position.y + rigidbody.m_velocity.y * deltaTime > Game::mapHeight - sprite.m_height) {
-				transform.m_position.y = Game::mapHeight + sprite.m_height;
+			if (entity.HasTag("player"))
+			{
+				constexpr int paddingLeft = 10;
+				constexpr int paddingTop = 10;
+				constexpr int paddingRight = 50;
+				constexpr int paddingBottom = 50;
+				transform.m_position.x = transform.m_position.x < paddingLeft ? paddingLeft : transform.m_position.x;
+				transform.m_position.x = transform.m_position.x > Game::mapWidth - paddingRight ? Game::mapWidth - paddingRight : transform.m_position.x;
+				transform.m_position.y = transform.m_position.y < paddingTop ? paddingTop : transform.m_position.y;
+				transform.m_position.y = transform.m_position.y > Game::mapHeight - paddingBottom ? Game::mapHeight - paddingBottom : transform.m_position.y;
 			}
-			else
-				transform.m_position.y += rigidbody.m_velocity.y * deltaTime;
 
-			//Logger::Log("transform.m_position.y: " + std::to_string(transform.m_position.y * rigidbody.m_velocity.y * deltaTime) + 
-			//	" Game::mapHeight: " + std::to_string(Game::mapHeight));
-			// transform.m_position.x += rigidbody.m_velocity.x * deltaTime;
-			// transform.m_position.y += rigidbody.m_velocity.y * deltaTime;
+			// check fi entity is outside the map limits with 100 pixels of margin
+			constexpr int margin = 100;
+
+			bool isEntityOustideMap =
+				(
+					transform.m_position.x < -margin ||
+					transform.m_position.x > Game::mapWidth + margin ||
+					transform.m_position.y < -margin ||
+					transform.m_position.y > Game::mapHeight + margin
+				);
+
+			// kill entities that are outside the map limits
+			if (!entity.HasTag("player") && isEntityOustideMap)
+			{
+				entity.Destroy();
+			}
+
 		}
 	}
 
@@ -106,6 +150,32 @@ public:
 	{
 		// TODO: sort all the entities based on their zIndex
 		auto RenderableEntities = GetSystemEntities();
+		auto RenderaableEntitesCopy = RenderableEntities;
+
+		// bypass entities that are outside the camera view except for the fixed sprites?
+		// great for performance
+		/*for (auto& entity : RenderableEntities)
+		{
+			TransformComponent transform = entity.GetComponent<TransformComponent>();
+			SpriteComponent sprite = entity.GetComponent<SpriteComponent>();
+
+			bool isEntityOutsSideCameraView =
+			{
+				!sprite.m_isFixed &&
+				transform.m_position.x > camera.x ||
+				transform.m_position.x <= camera.x + camera.w ||
+				transform.m_position.y > camera.y ||
+				transform.m_position.y <= camera.y + camera.h
+			};
+
+			if (isEntityOutsSideCameraView)
+			{
+				continue;
+			}
+
+			RenderaableEntitesCopy.emplace_back(entity);
+		}*/
+
 		std::sort(RenderableEntities.begin(), RenderableEntities.end(), [](const Entity& entity1, const Entity& entity2)
 			{
 				return entity1.GetComponent<SpriteComponent>().m_zIndex < entity2.GetComponent<SpriteComponent>().m_zIndex;
@@ -137,7 +207,7 @@ public:
 				&dstRect,
 				tranform.m_rotation,
 				NULL,
-				SDL_FLIP_NONE
+				sprite.m_flip
 			);
 		}
 	}

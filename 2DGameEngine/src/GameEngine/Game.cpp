@@ -17,10 +17,12 @@ namespace
 	const std::string radarImage = "radar-image";
 	const std::string jungleTileTexture = "jungle-tile-texture";
 	const std::string bulletImage = "bullet-image";
+	const std::string treeImage = "tree-image";
 	
 	const std::string playerTag = "player";
 	const std::string enemyGroup = "enemies";
 	const std::string tileGroup = "tiles";
+	const std::string obstaclesGroup = "obstacles";
 }
 
 Game::Game() noexcept :
@@ -183,6 +185,7 @@ void Game::LoadLevel(unsigned int level) noexcept
 	m_assetStore->AddTexture(m_renderer, radarImage, "./assets/images/radar.png");
 	m_assetStore->AddTexture(m_renderer, jungleTileTexture, "./assets/tilemaps/jungle.png");
 	m_assetStore->AddTexture(m_renderer, bulletImage, "./assets/images/bullet.png");
+	m_assetStore->AddTexture(m_renderer, treeImage, "./assets/images/tree.png");
 
 	m_assetStore->AddFont("charriot-font", "./assets/fonts/charriot.ttf", 20);
 	m_assetStore->AddFont("pico8-font-8", "./assets/fonts/charriot.ttf", 8);
@@ -212,12 +215,24 @@ void Game::LoadLevel(unsigned int level) noexcept
 
 	Entity tank = m_registry->CreateEntity();
 	tank.Group(enemyGroup);
-	tank.AddComponent<TransformComponent>(glm::vec2(350.0, 10.0), glm::vec2(1.0, 1.0), 0.0);
-	tank.AddComponent<RigidbodyComponent>(glm::vec2(0.0, 0.0));
+	tank.AddComponent<TransformComponent>(glm::vec2(500.0, 495.0), glm::vec2(1.0, 1.0), 0.0);
+	tank.AddComponent<RigidbodyComponent>(glm::vec2(20.0, 0.0));
 	tank.AddComponent<SpriteComponent>(tankImage, IMAGE_SIZE_WIDTH, IMAGE_SIZE_HEIGHT, 1);
 	tank.AddComponent<BoxColliderComponent>(IMAGE_SIZE_WIDTH, IMAGE_SIZE_HEIGHT);
-	tank.AddComponent<ProjectileEmitterComponent>(glm::vec2(150.0, 0.0), 2000, 3000, 10, false, false);
+	// tank.AddComponent<ProjectileEmitterComponent>(glm::vec2(150.0, 0.0), 2000, 3000, 10, false, false);
 	tank.AddComponent<HealthComponent>(50, 50);
+
+	Entity treeA = m_registry->CreateEntity();
+	treeA.Group(obstaclesGroup);
+	treeA.AddComponent<TransformComponent>(glm::vec2(600.0, 495), glm::vec2(1.0, 1.0), 0.0);
+	treeA.AddComponent<SpriteComponent>(treeImage, 16, IMAGE_SIZE_HEIGHT, 2);
+	treeA.AddComponent<BoxColliderComponent>(16, 32);
+
+	Entity treeB = m_registry->CreateEntity();
+	treeB.Group(obstaclesGroup);
+	treeB.AddComponent<TransformComponent>(glm::vec2(400.0, 495.0), glm::vec2(1.0, 1.0), 0.0);
+	treeB.AddComponent<SpriteComponent>(treeImage, 16, IMAGE_SIZE_HEIGHT, 2);
+	treeB.AddComponent<BoxColliderComponent>(16, 32);
 
 	Entity truck = m_registry->CreateEntity();
 	truck.Group(enemyGroup);
