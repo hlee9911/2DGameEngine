@@ -281,10 +281,13 @@
     <ClInclude Include="src\EventBus\EventBus.h" />
     <ClInclude Include="src\Events\Events.h" />
     <ClInclude Include="src\GameEngine\Game.h" />
+    <ClInclude Include="src\GameEngine\LevelLoader.h" />
     <ClInclude Include="src\Logger\Logger.h" />
     <ClInclude Include="src\Systems\Systems.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\scripts\Level1.lua" />
+    <None Include="assets\scripts\myscript.lua" />
     <None Include="libs\glm\detail\func_common.inl" />
     <None Include="libs\glm\detail\func_common_simd.inl" />
     <None Include="libs\glm\detail\func_exponential.inl" />
@@ -429,6 +432,7 @@
     <ClCompile Include="src\AssetStore\AssetStore.cpp" />
     <ClCompile Include="src\ECS\ECS.cpp" />
     <ClCompile Include="src\GameEngine\Game.cpp" />
+    <ClCompile Include="src\GameEngine\LevelLoader.cpp" />
     <ClCompile Include="src\Logger\Logger.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>

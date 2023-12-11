@@ -503,6 +503,7 @@ public:
 	void SubscribeToEvent(std::unique_ptr<EventBus>& eventBus) noexcept override
 	{
 		eventBus->SubscribeEvent<KeyPressedEvent>(this, &KeyboardControlSystem::OnKeyPressed);
+		Logger::Log("Key pressed event received. Key code: ");
 	}
 
 	void OnKeyPressed(KeyPressedEvent& e) noexcept
@@ -976,8 +977,10 @@ public:
 				enemy.AddComponent<RigidbodyComponent>(glm::vec2(enemyXVel, enemyYVel));
 				enemy.AddComponent<SpriteComponent>(sprites[selectedSpriteIndex], IMAGE_SIZE_WIDTH, IMAGE_SIZE_HEIGHT, 2);
 				enemy.AddComponent<BoxColliderComponent>(25, 20, glm::vec2(5, 5));
+				
 				double projVelX = cos(enemyProjAngle) * enemyProjSpeed; // convert angle to radians
 				double projVelY = sin(enemyProjAngle) * enemyProjSpeed; // convert angle to radians
+				
 				enemy.AddComponent<ProjectileEmitterComponent>(glm::vec2(projVelX, projVelY), enemyProjRepeat * 1000, enemyProjDuration * 1000, 10, false, false);
 				enemy.AddComponent<HealthComponent>(enemyHealth, enemyHealth);
 			

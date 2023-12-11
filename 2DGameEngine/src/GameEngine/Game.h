@@ -5,6 +5,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <glm/glm.hpp>
+#include <sol/sol.hpp>
 #include <imgui/imgui.h>
 #include <imgui/imgui_sdl.h>
 #include <imgui/imgui_impl_sdl.h>
@@ -20,16 +21,29 @@
 
 namespace
 {
-	constexpr unsigned int FPS = 165;
-	constexpr unsigned int MILLISECOND_PER_FRAME = 1000 / FPS;
-	constexpr unsigned int IMAGE_SIZE_WIDTH = 32;
-	constexpr unsigned int IMAGE_SIZE_HEIGHT = 32;
+	static const std::string tankImage = "tank-image";
+	static const std::string truckImage = "truck-image";
+	static const std::string chopperImage = "chopper-image";
+	static const std::string radarImage = "radar-image";
+	static const std::string jungleTileTexture = "jungle-tile-texture";
+	static const std::string bulletImage = "bullet-image";
+	static const std::string treeImage = "tree-image";
+
+	static const std::string playerTag = "player";
+	static const std::string enemyGroup = "enemies";
+	static const std::string tileGroup = "tiles";
+	static const std::string obstaclesGroup = "obstacles";
+
+	static constexpr unsigned int FPS = 165;
+	static constexpr unsigned int MILLISECOND_PER_FRAME = 1000 / FPS;
+	static constexpr unsigned int IMAGE_SIZE_WIDTH = 32;
+	static constexpr unsigned int IMAGE_SIZE_HEIGHT = 32;
 
 	// TileMapData
-	constexpr int tileSize = 32;
-	constexpr double tileScale = 2.0;
-	constexpr int mapNumCols = 25;
-	constexpr int mapNumRows = 20;
+	// static constexpr int tileSize = 32;
+	// static constexpr double tileScale = 2.0;
+	// static constexpr int mapNumCols = 25;
+	// static constexpr int mapNumRows = 20;
 }
 
 class Game
@@ -40,8 +54,6 @@ public:
 
 	void Init() noexcept;
 	void Run() noexcept;
-	void TileMapSetUp() noexcept;
-	void LoadLevel(unsigned int level) noexcept;
 	void SetUp() noexcept;
 
 	// game loop functions
@@ -55,6 +67,8 @@ public:
 	static unsigned int windowHeight;
 	static int mapWidth;
 	static int mapHeight;
+
+	sol::state lua;
 
 private:
 
