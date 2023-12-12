@@ -259,6 +259,13 @@ void LevelLoader::LoadLevel(sol::state& lua,
 					static_cast<int>(entity["components"]["health"]["health_percentage"].get_or(100))
 				);
 			}
+
+			// Script
+			sol::optional<sol::table> script = entity["components"]["on_update_script"];
+			if (script != sol::nullopt) {
+				sol::function func = entity["components"]["on_update_script"][0];
+				newEntity.AddComponent<ScriptComponent>(func);
+			}
 		}
 		i++;
 	}

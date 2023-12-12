@@ -62,13 +62,13 @@ public:
 	void Render() noexcept;
 
 	void Destroy() noexcept;
+	
+	sol::state lua;
 
 	static unsigned int windowWidth;
 	static unsigned int windowHeight;
 	static int mapWidth;
 	static int mapHeight;
-
-	sol::state lua;
 
 private:
 

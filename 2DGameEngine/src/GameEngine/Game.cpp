@@ -121,11 +121,15 @@ void Game::SetUp() noexcept
 	m_registry->AddSystem<RenderTextSystem>();
 	m_registry->AddSystem<RenderHealthBarSystem>();
 	m_registry->AddSystem<RenderGUISystem>();
+	m_registry->AddSystem<ScriptSystem>();
+
+	// create the bindings between C++ and Lua
+	// m_registry->GetSystem<ScriptSystem>().CreateLuaBindings(lua);
 
 	// load first level
 	LevelLoader loader;
-	lua.open_libraries(sol::lib::base, sol::lib::math);
-	loader.LoadLevel(lua, m_registry, m_assetStore, m_eventBus, m_renderer, 1);
+	lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::os);
+	loader.LoadLevel(lua, m_registry, m_assetStore, m_eventBus, m_renderer, 2);
 }
 
 void Game::ProcessInput() noexcept
@@ -188,7 +192,7 @@ void Game::Update() noexcept
 
 	// Updat the registry to process the entities that are waiting to be created/deleted
 	// Invoke all the systems that need to be updated
-	m_registry->Update(deltaTime, m_eventBus, m_camera, m_registry, m_assetStore, m_renderer);
+	m_registry->Update(deltaTime, m_eventBus, m_camera, m_registry, m_assetStore, m_renderer, SDL_GetTicks());
 }
 
 void Game::Render() noexcept

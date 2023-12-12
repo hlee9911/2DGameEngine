@@ -232,7 +232,7 @@ void Registry::SubscribeToEvents(std::unique_ptr<EventBus>& eventBus) noexcept
 /// </summary>
 /// <param name="deltaTime"></param>
 void Registry::Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, 
-					  std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer) noexcept
+					  std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer, int elapsedTime) noexcept
 {
 	// Add the entities that are waiting to be created to the active Systems
 	for (auto& entity : m_entitiesToBeAdded)
@@ -244,7 +244,7 @@ void Registry::Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_
 	// Update all the active Systems
 	for (const auto& system : m_systems)
 	{
-		system.second->Update(deltaTime, eventBus, camera, registry, assetStore, renderer);
+		system.second->Update(deltaTime, eventBus, camera, registry, assetStore, renderer, elapsedTime);
 	}
 
 	// Remove the entities that are waiting to be removed from the active Systems

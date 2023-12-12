@@ -6,6 +6,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <glm/glm.hpp>
+#include <sol/sol.hpp>
 
 #include "../Logger/Logger.h"
 
@@ -186,7 +187,16 @@ struct TextLabelComponent
 		this->m_isFixed = isFixed;
 		Logger::Log("TextLabelComponent created");
 	}
+};
 
+struct ScriptComponent
+{
+	sol::function func;
+
+	ScriptComponent(sol::function func = sol::lua_nil) noexcept
+	{
+		this->func = func;
+	}
 };
 
 

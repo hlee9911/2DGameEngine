@@ -117,7 +117,8 @@ public:
 	virtual void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, 
 						SDL_Rect& camera, std::unique_ptr<Registry>& registry,
 						std::unique_ptr<AssetStore>& assetStore,
-						SDL_Renderer* renderer) noexcept = 0;
+						SDL_Renderer* renderer,
+						int elapsedTime) noexcept = 0;
 	virtual void Render(SDL_Renderer* renderer, std::unique_ptr<AssetStore>& assetStore, 
 						SDL_Rect& camera, std::unique_ptr<Registry>& registry, bool isDebugMode = false) noexcept = 0;
 
@@ -291,7 +292,7 @@ public:
 	// the creation and the deletion of entities 
 	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, 
 				std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore,
-				SDL_Renderer* renderer) noexcept;
+				SDL_Renderer* renderer, int elapsedTime) noexcept;
 	// Render all the systems
 	void Render(SDL_Renderer* renderer, std::unique_ptr<AssetStore>& assetStore, 
 				SDL_Rect& camera, std::unique_ptr<Registry>& registry, bool isDebugMode = false) noexcept;

@@ -72,7 +72,8 @@ public:
 		}
 	}
 
-	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer) noexcept override
+	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, 
+		std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer, int elapsedTime) noexcept override
 	{
 		//TODO:
 		//loop all entities with the system is interested in
@@ -141,7 +142,8 @@ public:
 
 	}
 
-	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer) noexcept override
+	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, 
+		std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer, int elapsedTime) noexcept override
 	{
 
 	}
@@ -228,7 +230,8 @@ public:
 
 	}
 
-	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer) noexcept override
+	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, 
+		std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer, int elapsedTime) noexcept override
 	{
 		for (const auto& entity : GetSystemEntities())
 		{
@@ -279,7 +282,8 @@ public:
 
 	}
 
-	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer) noexcept override
+	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, 
+		std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer, int elapsedTime) noexcept override
 	{
 		auto& entities = GetSystemEntities();
 		// check all entities that have a boxcollider component
@@ -359,7 +363,8 @@ public:
 
 	}
 
-	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer) noexcept override
+	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, 
+		std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer, int elapsedTime) noexcept override
 	{
 
 	}
@@ -478,7 +483,7 @@ public:
 	}
 
 	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, 
-				std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer) noexcept override
+				std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer, int elapsedTime) noexcept override
 	{
 
 	}
@@ -548,7 +553,8 @@ public:
 
 	}
 
-	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer) noexcept override
+	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, 
+		std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer, int elapsedTime) noexcept override
 	{
 
 	}
@@ -575,7 +581,8 @@ public:
 
 	}
 
-	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer) noexcept override
+	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, 
+		std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer, int elapsedTime) noexcept override
 	{
 		for (const auto& entity : GetSystemEntities())
 		{
@@ -641,7 +648,8 @@ public:
 		}
 	}
 
-	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer) noexcept override
+	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, 
+		std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer, int elapsedTime) noexcept override
 	{
 		for (const auto& entity : GetSystemEntities())
 		{
@@ -721,7 +729,8 @@ public:
 		
 	}
 
-	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer) noexcept override
+	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, 
+		std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer, int elapsedTime) noexcept override
 	{
 		for (auto& entity : GetSystemEntities())
 		{
@@ -756,7 +765,8 @@ public:
 
 	}
 
-	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer) noexcept override
+	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera, std::unique_ptr<Registry>& registry,
+		std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer, int elapsedTime) noexcept override
 	{
 
 	}
@@ -811,7 +821,7 @@ public:
 	}
 
 	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera,
-				std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer) noexcept override
+				std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer, int elapsedTime) noexcept override
 	{
 
 	}
@@ -896,7 +906,7 @@ public:
 	}
 
 	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera,
-		std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer) noexcept override
+		std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer, int elapsedTime) noexcept override
 	{
 
 	}
@@ -1007,6 +1017,135 @@ public:
 		ImGui::Render();
 		ImGuiSDL::Render(ImGui::GetDrawData());
 	}
+};
+
+//////////////////////////////// LUA SCRIPTING SYSTEM //////////////////////////////////////
+//std::tuple<double, double> GetEntityPosition(Entity entity) {
+//	if (entity.HasComponent<TransformComponent>()) {
+//		const auto transform = entity.GetComponent<TransformComponent>();
+//		return std::make_tuple(transform.m_position.x, transform.m_position.y);
+//	}
+//	else {
+//		Logger::Error("Trying to get the position of an entity that has no transform component");
+//		return std::make_tuple(0.0, 0.0);
+//	}
+//}
+//
+//std::tuple<double, double> GetEntityVelocity(Entity entity) {
+//	if (entity.HasComponent<RigidbodyComponent>()) {
+//		const auto rigidbody = entity.GetComponent<RigidbodyComponent>();
+//		return std::make_tuple(rigidbody.m_velocity.x, rigidbody.m_velocity.y);
+//	}
+//	else {
+//		Logger::Error("Trying to get the velocity of an entity that has no rigidbody component");
+//		return std::make_tuple(0.0, 0.0);
+//	}
+//}
+//
+//void SetEntityPosition(Entity entity, double x, double y) {
+//	if (entity.HasComponent<TransformComponent>()) {
+//		auto& transform = entity.GetComponent<TransformComponent>();
+//		transform.m_position.x = x;
+//		transform.m_position.y = y;
+//	}
+//	else {
+//		Logger::Error("Trying to set the position of an entity that has no transform component");
+//	}
+//}
+//
+//void SetEntityVelocity(Entity entity, double x, double y) {
+//	if (entity.HasComponent<RigidbodyComponent>()) {
+//		auto& rigidbody = entity.GetComponent<RigidbodyComponent>();
+//		rigidbody.m_velocity.x = x;
+//		rigidbody.m_velocity.y = y;
+//	}
+//	else {
+//		Logger::Error("Trying to set the velocity of an entity that has no rigidbody component");
+//	}
+//}
+//
+//void SetEntityRotation(Entity entity, double angle) {
+//	if (entity.HasComponent<TransformComponent>()) {
+//		auto& transform = entity.GetComponent<TransformComponent>();
+//		transform.m_rotation = angle;
+//	}
+//	else {
+//		Logger::Error("Trying to set the rotation of an entity that has no transform component");
+//	}
+//}
+//
+//void SetEntityAnimationFrame(Entity entity, int frame) {
+//	if (entity.HasComponent<AnimationComponent>()) {
+//		auto& animation = entity.GetComponent<AnimationComponent>();
+//		animation.currentFrame = frame;
+//	}
+//	else {
+//		Logger::Error("Trying to set the animation frame of an entity that has no animation component");
+//	}
+//}
+//
+//void SetProjectileVelocity(Entity entity, double x, double y) {
+//	if (entity.HasComponent<ProjectileEmitterComponent>()) {
+//		auto& projectileEmitter = entity.GetComponent<ProjectileEmitterComponent>();
+//		projectileEmitter.m_projectileVelocity.x = x;
+//		projectileEmitter.m_projectileVelocity.y = y;
+//	}
+//	else {
+//		Logger::Error("Trying to set the projectile velocity of an entity that has no projectile emitter component");
+//	}
+//}
+
+class ScriptSystem : public System
+{
+public:
+
+	ScriptSystem() noexcept
+	{
+		RequireComponent<ScriptComponent>();
+	}
+
+	void SubscribeToEvent(std::unique_ptr<EventBus>& eventBus) noexcept override
+	{
+
+	}
+
+	void Update(float deltaTime, std::unique_ptr<EventBus>& eventBus, SDL_Rect& camera,
+		std::unique_ptr<Registry>& registry, std::unique_ptr<AssetStore>& assetStore, SDL_Renderer* renderer, int elapsedTime) noexcept override
+	{
+		// loop all entities that have a script component and invoke their lua function
+		for (auto& entity : GetSystemEntities())
+		{
+			const auto& script = entity.GetComponent<ScriptComponent>();
+			script.func(/*entity, deltaTime, elapsedTime*/); // here is where we invoke the lua function
+		}
+	}
+
+	void Render(SDL_Renderer* renderer, std::unique_ptr<AssetStore>& assetStore, SDL_Rect& camera,
+		std::unique_ptr<Registry>& registry, bool isDebugMode) noexcept override
+	{
+
+	}
+
+	//void CreateLuaBindings(sol::state& lua)
+	//{
+	//	// Create entity usertype so lua knows what an entity is
+	//	lua.new_usertype<Entity>(
+	//		"entity",
+	//		"get_id", &Entity::GetID,
+	//		"destroy", &Entity::Destroy,
+	//		"has_tag", &Entity::HasTag,
+	//		"belongs_to_group", &Entity::BelongsToGroup
+	//	);
+
+	//	// bind the native c++ functions with lua functions
+	/*lua.set_function("get_velocity", GetEntityVelocity);
+	lua.set_function("set_position", SetEntityPosition);
+	lua.set_function("set_velocity", SetEntityVelocity);
+	lua.set_function("set_rotation", SetEntityRotation);
+	lua.set_function("set_projectile_velocity", SetProjectileVelocity);
+	lua.set_function("set_animation_frame", SetEntityAnimationFrame);*/
+	//}
+
 };
 
 #endif // SYSTEMS_H
