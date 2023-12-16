@@ -1,2 +1,2 @@
 # 2DGameEngine
- 2D Game Engine using C++, SDL2, ImGui, and Lua
+ A 2D Game Engine using Modern C++, SDL2, ImGui, and Lua(Scripts) as a Test.
